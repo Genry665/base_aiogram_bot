@@ -1,6 +1,8 @@
 from aiogram import Bot, Dispatcher
+from aiogram import F
+from aiogram.filters import CommandStart
 from aiogram.types import Message
-from core.handlers.basic import get_start
+from core.handlers.basic import get_start, get_photo
 
 from core.setting import settings
 
@@ -26,8 +28,8 @@ async def start():
     dp = Dispatcher()
     # dp.startup.register(start_bot)
     # dp.shutdown.register(stop_bot)
-
-    dp.message.register(get_start)
+    dp.message.register(get_photo, F.photo)
+    dp.message.register(get_start, CommandStart)
     try:
         await dp.start_polling(bot)
     finally:
